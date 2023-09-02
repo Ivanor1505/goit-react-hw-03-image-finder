@@ -3,7 +3,7 @@ import {
   SearchBar,
   SearchForm,
   SearchFormButton,
-  SearchFormButtonLabel,
+  // SearchFormButtonLabel,
   SearchFormInput,
 } from './Searchbar.styled';
 
@@ -28,7 +28,7 @@ export class Searchbar extends Component {
       <SearchBar>
         <SearchForm onSubmit={this.handleSubmit}>
           <SearchFormButton type="submit">
-            <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+           🔍
           </SearchFormButton>
 
           <SearchFormInput

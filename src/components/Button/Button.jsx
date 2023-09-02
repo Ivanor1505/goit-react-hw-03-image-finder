@@ -1,9 +1,6 @@
+import React from 'react';
 import { MoreButton } from './Button.styled';
 
 export const Button = ({ loadMore }) => {
-  return (
-    <div>
-      <MoreButton onClick={loadMore}>Load more</MoreButton>
-    </div>
-  );
+  return <MoreButton onClick={loadMore}>Load more</MoreButton>;
 };

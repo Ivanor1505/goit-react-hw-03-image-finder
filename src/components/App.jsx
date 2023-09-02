@@ -18,16 +18,20 @@ export class App extends Component {
     selectedImage: '',
   };
 
-  async componentDidMount() {
-    try {
-      this.setState({ loading: true, error: false });
-      const images = await fetchImages();
-      this.setState({ images: images.hits });
-      // console.log('this.state.images:', this.state.images);
-    } catch (error) {
-      this.setState({ error: true });
-    } finally {
-      this.setState({ loading: false });
+  async componentDidUpdate(prevProps, prevState) {
+    const { query } = this.state;
+    if (query !== prevState.query) {
+      try {
+        // console.log('this.state.query:', this.state.query);
+        this.setState({ loading: true, error: false });
+        const images = await fetchImages();
+        this.setState({ images: images.hits });
+        // console.log('this.state.query:', this.state.query);
+      } catch (error) {
+        this.setState({ error: true });
+      } finally {
+        this.setState({ loading: false });
+      }
     }
   }
 
@@ -70,6 +74,7 @@ export class App extends Component {
   };
 
   render() {
+    const { images, showModal, loading } = this.state;
     return (
       <div>
         <Searchbar onSubmit={this.handleSearch} />
@@ -77,11 +82,14 @@ export class App extends Component {
           allImages={this.state.images}
           onImageClick={this.handleImageClick}
         />
-        <Button loadMore={this.handleLoadMore} />
-        {this.state.showModal && <Modal image={this.state.selectedImage} closeModal={this.closeModal}/>}
-        {this.state.loading && (
-          <Loader/>
+        {images.length > 0 && !loading && <Button loadMore={this.handleLoadMore} />}
+        {showModal && (
+          <Modal
+            image={this.state.selectedImage}
+            closeModal={this.closeModal}
+          />
         )}
+        {loading && <Loader />}
       </div>
     );
   }
