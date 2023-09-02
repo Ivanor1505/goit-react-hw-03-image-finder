@@ -12,10 +12,22 @@ export class Modal extends Component {
 
   closeModal = () => {
     this.setState({ isOpen: false });
+    this.props.closeModal()
+  };
+
+    handleKeyPress = (e) => {
+    if (e.key === 'Escape' && this.state.isOpen) {
+      this.closeModal();
+    }
   };
 
   componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress);
     this.openModal();
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyPress);
   }
 
   render() {

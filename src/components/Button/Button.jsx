@@ -1,4 +1,4 @@
-import {MoreButton} from './Button.styled'
+import { MoreButton } from './Button.styled';
 
 export const Button = ({ loadMore }) => {
   return (
@@ -7,5 +7,3 @@ export const Button = ({ loadMore }) => {
     </div>
   );
 };
-
-
