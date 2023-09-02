@@ -4,6 +4,7 @@ import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import { Searchbar } from './Searchbar/Searchbar';
 import { fetchImages } from './api';
+import {AppBox} from './App.styled'
 
 const { Component } = require('react');
 
@@ -76,7 +77,7 @@ export class App extends Component {
   render() {
     const { images, showModal, loading } = this.state;
     return (
-      <div>
+      <AppBox>
         <Searchbar onSubmit={this.handleSearch} />
         <Gallery
           allImages={this.state.images}
@@ -90,7 +91,7 @@ export class App extends Component {
           />
         )}
         {loading && <Loader />}
-      </div>
+      </AppBox>
     );
   }
 }

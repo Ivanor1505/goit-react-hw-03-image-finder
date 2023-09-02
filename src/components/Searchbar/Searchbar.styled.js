@@ -34,7 +34,7 @@ export const SearchFormButton = styled.button`
   width: 48px;
   height: 48px;
   border: 0;
-  background-image: 👀;
+  /* background-image: 👀; */
   background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;
@@ -43,7 +43,7 @@ export const SearchFormButton = styled.button`
   cursor: pointer;
   outline: none;
 
-  :hover {
+  &:hover {
   opacity: 1;
 }
 `;
