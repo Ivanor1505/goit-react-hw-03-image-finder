@@ -20,23 +20,12 @@ export class App extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    const { query, page } = this.state;
+    const { query, page, images } = this.state;
 
-    if (query !== prevState.query) {
-      this.setState({ loading: true, error: false, page: 1 });
-      try {
-        const images = await fetchImages(query);
-        this.setState({ images: images.hits });
-      } catch (error) {
-        this.setState({ error: true });
-      } finally {
-        this.setState({ loading: false });
-      }
-    } else if (page !== prevState.page && page !== 1) {
+    if (query !== prevState.query || page !== prevState.page) {
       this.setState({ loading: true, error: false });
       try {
         const newImages = await fetchImages(query, page);
-
         this.setState({ images: [...prevState.images, ...newImages.hits] });
       } catch (error) {
         this.setState({ error: true });
@@ -44,7 +33,7 @@ export class App extends Component {
         this.setState({ loading: false });
       }
     }
-  }
+      }
 
   handleSearch = value => {
     if (value === '') {
