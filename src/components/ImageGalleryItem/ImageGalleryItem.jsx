@@ -3,21 +3,15 @@ import { GalleryItem, GalleryItemImage } from './ImageGalleryItem.styled';
 
 export class GalleryItems extends Component {
   handleItemClick = () => {
-    const { img } = this.props;
-    this.props.onImageClick(img);
+    this.props.onImageClick();
   };
 
   render() {
-    const { miniImg, img } = this.props;
+    const { miniImg } = this.props;
 
     return (
       <GalleryItem>
-        <GalleryItemImage
-          src={miniImg}
-          alt=""
-          onClick={this.handleItemClick}
-          image={img}
-        />
+        <GalleryItemImage src={miniImg} alt="" onClick={this.handleItemClick} />
       </GalleryItem>
     );
   }
