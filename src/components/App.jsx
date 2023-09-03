@@ -47,13 +47,7 @@ export class App extends Component {
     }
   };
 
-  closeModal = () => {
-    this.setState({
-      showModal: false,
-    });
-  };
-
-  handleLoadMore = async () => {
+    handleLoadMore = async () => {
     this.setState({ loading: true, error: false });
     try {
       const { query, page } = this.state;
@@ -70,7 +64,13 @@ export class App extends Component {
     }
   };
 
-  handleImageClick = imageUrl => {
+  closeModal = () => {
+    this.setState({
+      showModal: false,
+    });
+  };
+
+  openModal = imageUrl => {
     this.setState({
       selectedImage: imageUrl,
       showModal: true,
@@ -84,7 +84,7 @@ export class App extends Component {
         <Searchbar onSubmit={this.handleSearch} />
         <Gallery
           allImages={this.state.images}
-          onImageClick={this.handleImageClick}
+          onImageClick={this.openModal}
         />
         {images.length > 0 && !loading && (
           <Button loadMore={this.handleLoadMore} />
