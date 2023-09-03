@@ -12,10 +12,16 @@ export class Modal extends Component {
 
   closeModal = () => {
     this.setState({ isOpen: false });
-    this.props.closeModal()
+    this.props.closeModal();
   };
 
-    handleKeyPress = (e) => {
+  handleOverlayClick = e => {
+    if (e.target === e.currentTarget) {
+      this.closeModal();
+    }
+  };
+
+  handleKeyPress = e => {
     if (e.key === 'Escape' && this.state.isOpen) {
       this.closeModal();
     }
@@ -37,8 +43,8 @@ export class Modal extends Component {
     return (
       <div>
         {isOpen && (
-          <Overlay onClick={this.closeModal}>
-            <ModalWind onClick={this.openModal}>
+          <Overlay onClick={this.handleOverlayClick}>
+            <ModalWind>
               <img src={image} alt="" />
             </ModalWind>
           </Overlay>
