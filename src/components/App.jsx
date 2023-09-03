@@ -20,13 +20,24 @@ export class App extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    const { query } = this.state;
+    const { query, page } = this.state;
 
     if (query !== prevState.query) {
+      this.setState({ loading: true, error: false, page: 1 });
+      try {
+        const images = await fetchImages(query);
+        this.setState({ images: images.hits });
+      } catch (error) {
+        this.setState({ error: true });
+      } finally {
+        this.setState({ loading: false });
+      }
+    } else if (page !== prevState.page && page !== 1) {
       this.setState({ loading: true, error: false });
       try {
-        const images = await fetchImages();
-        this.setState({ images: images.hits });
+        const newImages = await fetchImages(query, page);
+
+        this.setState({ images: [...prevState.images, ...newImages.hits] });
       } catch (error) {
         this.setState({ error: true });
       } finally {
@@ -35,33 +46,17 @@ export class App extends Component {
     }
   }
 
-  handleSearch = async query => {
-    this.setState({ loading: true, error: false });
-    try {
-      const imageData = await fetchImages(query);
-      this.setState({ images: imageData.hits });
-    } catch (error) {
-      this.setState({ error: true });
-    } finally {
-      this.setState({ loading: false });
+  handleSearch = value => {
+    if (value === '') {
+      return;
     }
+    this.setState({ query: value });
   };
 
-  handleLoadMore = async () => {
-    this.setState({ loading: true, error: false });
-    try {
-      const { query, page } = this.state;
-      const newImages = await fetchImages(query, page + 1);
-
-      this.setState(prevState => ({
-        images: [...prevState.images, ...newImages.hits],
-        page: prevState.page + 1,
-      }));
-    } catch (error) {
-      this.setState({ error: true });
-    } finally {
-      this.setState({ loading: false });
-    }
+  handleLoadMore = () => {
+    this.setState(prevState => {
+      return { page: prevState.page + 1 };
+    });
   };
 
   openModal = imageUrl => {
