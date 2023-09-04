@@ -20,7 +20,7 @@ export class App extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    const { query, page, images } = this.state;
+    const { query, page } = this.state;
 
     if (query !== prevState.query || page !== prevState.page) {
       this.setState({ loading: true, error: false });
